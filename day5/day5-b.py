@@ -22,8 +22,7 @@ for code in inputs:
     passID = row * 8 + col
     resultList.append(passID)
 
-resultList.sort()
-for i in range(1, len(resultList)):
-    if resultList[i]-2 == resultList[i-1]:
-        print(resultList[i]-1)
-        break
+minSeat = min(resultList)
+maxSeat = max(resultList)
+sumOfSeats = sum(resultList)
+print(sum(range(minSeat, maxSeat+1)) - sumOfSeats)
