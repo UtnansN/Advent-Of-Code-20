@@ -1,20 +1,13 @@
-inputs = []
-print('Paste inputs, Ctrl-Z or Ctrl-D to proceed')
-while True:
-    try:
-        line = input()
-    except EOFError:
-        break
-    inputs.append(line)
+with open('input.txt') as f:
+    inputs = f.read()
 
 desired = 2020
 diffSet = set()
-
-for intStr in inputs:
+for intStr in inputs.splitlines():
     num = int(intStr)
     diff = desired - num
     if diff in diffSet:
-        print('Answer: ' + str(num*diff))
+        print(num*diff)
         break
     else:
         diffSet.add(num)

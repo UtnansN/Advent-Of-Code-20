@@ -1,14 +1,7 @@
 import re
 
-inputs = []
-print('Paste inputs, Ctrl-Z or Ctrl-D to proceed')
-while True:
-    try:
-        line = input()
-    except EOFError:
-        break
-    inputs.append(line)
-
+with open('input.txt') as f:
+    inputs = f.read()
 
 def validate(passport):
     rules = [
@@ -19,7 +12,6 @@ def validate(passport):
     ('hcl', lambda x: re.match(r'^#[0-9a-f]{6}$', x)), 
     ('ecl', lambda x: x in set(['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'])), 
     ('pid', lambda x: re.match(r'^[0-9]{9}$', x))]
-
     try:
         for param, check in rules:
             param_value = passport[param]
@@ -30,19 +22,10 @@ def validate(passport):
     return True
 
 valid = 0
-curr_passport = {}
-for row in inputs:
-    if row == '':
-        if validate(curr_passport):
-            valid += 1
-        curr_passport.clear()
-    else:
+for pass_inputs in inputs.split('\n\n'):
+    curr_passport = {}
+    for row in pass_inputs.splitlines():
         params = [(y[0], y[1]) for y in [x.split(':') for x in row.split(' ')]]
         curr_passport.update(params)
-
-# Just for the last row
-if len(curr_passport.keys()) > 0:
-    if validate(curr_passport):
-        valid += 1
-
+    valid += int(validate(curr_passport))
 print(valid)

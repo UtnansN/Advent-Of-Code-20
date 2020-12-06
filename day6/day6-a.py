@@ -1,21 +1,10 @@
-inputs = []
-print('Paste inputs, Ctrl-Z or Ctrl-D to proceed')
-while True:
-    try:
-        line = input()
-    except EOFError:
-        break
-    inputs.append(line)
+with open('input.txt') as f:
+    inputs = f.read()
 
 sum = 0
-groups = set()
-for row in inputs:
-    if row == '':
-        sum += len(groups)
-        groups.clear()
-    else:
-        groups.update([c for c in row])
-
-if len(groups) > 0:
-    sum += len(groups)
+for group in inputs.split('\n\n'):
+    answer_set = set()
+    for row in group.splitlines():
+        answer_set |= set(row)
+    sum += len(answer_set)
 print(sum)
