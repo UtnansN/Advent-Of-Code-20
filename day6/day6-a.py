@@ -14,8 +14,7 @@ for row in inputs:
         sum += len(groups)
         groups.clear()
     else:
-        for c in row:
-            groups.add(c)
+        groups.update([c for c in row])
 
 if len(groups) > 0:
     sum += len(groups)

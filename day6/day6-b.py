@@ -16,9 +16,7 @@ for row in inputs:
         answer_set.clear()
         initial_values_set = False
     else:
-        member_answers = set()
-        for c in row:
-            member_answers.add(c)
+        member_answers = set([c for c in row])
 
         if initial_values_set:
             answer_set.intersection_update(member_answers)
