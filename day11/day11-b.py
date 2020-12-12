@@ -4,23 +4,21 @@ with open('input.txt') as f:
 
 prox = [(-1, -1), (-1, 0), (-1, +1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
 
-def rangenerator(x_start, y_start, x_stop, y_stop, x_step, y_step):
+def sees_occupied(x_start, y_start, x_stop, y_stop, x_step, y_step):
     x = x_start
     y = y_start
     while (0 <= x < x_stop) and (0 <= y < y_stop):
         pos = seats[x][y]
-        if pos == '.':
-            yield False
-        elif pos == '#':
-            yield True
-        else:
-            yield False
-            break
+        if pos == '#':
+            return True
+        elif pos == 'L':
+            return False
         x += x_step
         y += y_step
+    return False
 
 def count_proximity(i, j):
-    return sum(any(x for x in rangenerator(i+a, j+b, len(seats), len(seats[i]), a, b)) for a, b in prox)
+    return sum(sees_occupied(i+a, j+b, len(seats), len(seats[i]), a, b) for a, b in prox)
 
 seats = [list(row) for row in inputs]
 changes = True
